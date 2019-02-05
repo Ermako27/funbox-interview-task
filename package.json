@@ -1,0 +1,36 @@
+{
+  "name": "funbox",
+  "version": "1.0.0",
+  "description": "map",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-dev": "webpack --config webpack.dev.js",
+    "build-prod": "webpack --config webpack.prod.js",
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ermako27/funbox-interview-task.git"
+  },
+  "author": "Ermakov Maxim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ermako27/funbox-interview-task/issues"
+  },
+  "homepage": "https://github.com/Ermako27/funbox-interview-task#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "clean-webpack-plugin": "^1.0.1",
+    "webpack": "^4.29.1",
+    "webpack-cli": "^3.2.1"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  }
+}
