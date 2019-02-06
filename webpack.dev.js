@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebPackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
     },
 
     entry : {
-        main : './src/app.js'
+        main : './src/index.js'
     },
 
 	output: {
@@ -28,14 +29,19 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env']
+                        presets: ['@babel/preset-env', '@babel/preset-react']
                     }
                 }
             }
         ] 
     },
 
+
     plugins : [
-        new CleanWebPackPlugin(['dist'])
+        new CleanWebPackPlugin(['dist']),
+        new HtmlWebpackPlugin({
+            template: "./index.html",
+            filename: "./index.html"
+        })
     ]
 }
