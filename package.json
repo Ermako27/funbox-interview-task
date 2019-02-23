@@ -2,7 +2,7 @@
   "name": "funbox",
   "version": "1.0.0",
   "description": "map",
-  "main": "server/server.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-dev": "webpack --config webpack.dev.js",

@@ -40,7 +40,6 @@ class App extends Component {
 
 
         fetch('https://api-maps.yandex.ru/2.1/?apikey=<6fd3a924-5d43-43b6-b93b-f1cf9bb3e236>&lang=ru_RU')
-
             .then( response => {
                 console.log(window.ymaps);
             })

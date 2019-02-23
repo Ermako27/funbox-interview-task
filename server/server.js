@@ -5,6 +5,7 @@ const app = express();
 
 const port = process.env.PORT || 8000;
 const root = path.resolve(__dirname, '..', 'dist');
+console.log('root',root);
 
 app.use(express.static(root))
 
