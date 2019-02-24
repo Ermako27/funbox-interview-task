@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class Ymap extends Component {
     constructor({ymap}) {
         super();
-        // console.log(this);
         this.ymap = ymap;
     }
 
@@ -11,7 +10,8 @@ class Ymap extends Component {
         center: [55.76, 37.64],
         zoom: 7,
         mapInstance: null,
-        placeMark: null
+        placeMarkArray: [],
+        maxPlaceMarkAmount: 5,
     };
 
     componentDidMount() {
@@ -24,41 +24,39 @@ class Ymap extends Component {
     addPlaceMarkListener() {
         this.state.mapInstance.events.add('click', (e) => {
             const coords = e.get('coords');
-    
-            // Если метка уже создана – просто передвигаем ее.
-            if (this.state.placeMark) {
-                this.state.placeMark.geometry.setCoordinates(coords);
-            }
-            // Если нет – создаем.
-            else {
-                this.state.placeMark = this.createPlacemark(coords);
-                this.state.mapInstance.geoObjects.add(this.state.placeMark);
+
+            if (this.state.placeMarkArray.length < this.state.maxPlaceMarkAmount) {
+                const placeMark = this.createPlacemark(coords);
+                this.state.mapInstance.geoObjects.add(placeMark);
                 // Слушаем событие окончания перетаскивания на метке.
-                this.state.placeMark.events.add('dragend', () => {
-                    this.getAddress(this.state.placeMark.geometry.getCoordinates());
+                placeMark.events.add('dragend', () => {
+                    this.getAddress(placeMark, placeMark.geometry.getCoordinates());
                 });
+                this.getAddress(placeMark, coords);
+                this.state.placeMarkArray.push(placeMark);
+                console.log(this.state.placeMarkArray.length);
             }
-            this.getAddress(coords);
         });
     }
 
     createPlacemark(coords) {
-        return new this.ymap.Placemark(coords, {
+        const placeMark = new this.ymap.Placemark(coords, {
             iconCaption: 'поиск...'
         }, {
             preset: 'islands#violetDotIconWithCaption',
             draggable: true
         });
+        return placeMark;
     }
 
 
-
-    getAddress(coords) {
-        this.state.placeMark.properties.set('iconCaption', 'поиск...');
+    getAddress(placeMark, coords) {
+        console.log('get adress',placeMark);
+        placeMark.properties.set('iconCaption', 'поиск...');
         this.ymap.geocode(coords).then( (res) => {
             const firstGeoObject = res.geoObjects.get(0);
 
-            this.state.placeMark.properties
+            placeMark.properties
                 .set({
                     // Формируем строку с данными об объекте.
                     iconCaption: [
@@ -72,9 +70,6 @@ class Ymap extends Component {
                 });
         });
     }
-
-
-
 
     render() {
         return (
